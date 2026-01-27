@@ -1,0 +1,8 @@
+# Visual studio files
+.vs/
+
+# Visual studio folders
+*.user
+
+# Compiled binaries and related stuff
+build/

@@ -1,0 +1,28 @@
+#pragma once
+
+// Common
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <memory>
+#include <functional>
+#include <algorithm>
+#include <utility>
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include <mutex>
+#include <atomic>
+#include <chrono>
+#include <locale>
+#include <iomanip>
+#include <ctime>
+#include <cstdint>
+
+// Containers
+#include <string>
+#include <vector>
+#include <variant>
+#include <map>
+#include <unordered_map>
+#include <unordered_set>
