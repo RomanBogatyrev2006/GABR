@@ -60,6 +60,9 @@ set_property(TARGET GabrCore PROPERTY FOLDER "Gabr")
 
 # --Library linking--
 
+# Link module to GabrFramework interface
+#target_link_libraries(GabrFramework INTERFACE GabrCore)
+
 # Framework Precompiled headers module
 target_link_libraries(GabrCore PUBLIC GabrPch)
 

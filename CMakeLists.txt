@@ -31,6 +31,11 @@ add_library(GabrFramework INTERFACE)
 
 # --Other--
 
+target_link_libraries(GabrFramework INTERFACE
+	GabrCore
+	GabrLog
+)
+
 # (ONLY FOR VISUAL STUDIO) Set default startup project to GABR instead cmake's ALL_BUILD
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT GabrCore)
 

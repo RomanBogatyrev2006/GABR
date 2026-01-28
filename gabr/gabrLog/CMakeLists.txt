@@ -28,6 +28,9 @@ set_property(TARGET GabrLog PROPERTY FOLDER "Gabr")
 
 # --Library linking--
 
+# Link module to GabrFramework interface
+#target_link_libraries(GabrFramework INTERFACE GabrLog)
+
 # Link logger module to core module
 target_link_libraries(GabrCore PUBLIC GabrLog)
 
