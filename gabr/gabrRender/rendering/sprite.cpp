@@ -1,7 +1,30 @@
 #include "sprite.h"
 
+#include <log/logger.h>
+
 namespace Gabr
 {
+	Sprite::Sprite()
+	{
+		mIndexBuffer = bgfx::createIndexBuffer(bgfx::makeRef(mIndices, 12));
+
+		if (!bgfx::isValid(mIndexBuffer))
+		{
+			Logger::Get().Log(LogSeverity::TRACE, "Couldn't create index buffer!");
+			return;
+		}
+	}
+
+	Sprite::~Sprite()
+	{
+		bgfx::destroy(mIndexBuffer);
+	}
+
+	void Sprite::Render()
+	{
+		
+	}
+
 
 	// Set location by X
 	float Sprite::SetLocationX(float x)

@@ -1,23 +1,32 @@
 #pragma once
 
-#include <api.h>
-#include <bgfx/bgfx.h>
-#include <bgfx/platform.h>
+//#include <bgfx/bgfx.h>
+//#include <bgfx/platform.h>
+#define SDL_MAIN_HANDLED
+#include <SDL3/SDL.h>
 #include "sprite.h"
 #include "texture.h"
+#include <deque>
 
 namespace Gabr
 {
 	class GABR_API RenderingManager
 	{
 	public:
-		bool Initialize();
+		// Constructor
+		RenderingManager(unsigned int width, unsigned int height);
 
-		void Deinitialize();
+		// Destructor (Deinitialize/Close/Destroy/Quit)
+		~RenderingManager();
 
+		// Update renderer and rendering manager
 		void Update();
 
 
+		// Is renderer running?
+		inline const bool IsRunning() { return bRunning; };
+
+		/*
 		// --Textures managing--
 
 		// Load texture from file (path to file)
@@ -29,7 +38,7 @@ namespace Gabr
 		// Get texture by tag
 		void GetTexture(const std::string& tag);
 
-
+		*/
 		// --Sprites managing--
 
 		// Create sprite object
@@ -38,13 +47,42 @@ namespace Gabr
 		// Destroy sprite object
 		void DestroySprite(Sprite* sprite);
 
-
 	private:
+		// Create window and initialize renderer
+		bool Initialize();
+		
+		// Deinitialize renderer and rendering manager
+		void Deinitialize();
+
+		// Clear/Destroy all sprites
+		void ClearSprites();
+		
+
+
+		// --Window--
+
+		// SDL Window
+		SDL_Window* mWindow;
+
+		// Window Width and Height
+		unsigned int mWidth, mHeight;
+
+
+		// SDL Events
+		SDL_Event mEvents;
+
+
+		// Is running
+		bool bRunning = false;
+
+		// Is initialized
+		bool bInitialized = false;
+
+
 		// Storage of texture
-		std::vector<std::string, Texture> mTextures = {};
+		//std::vector<std::string, Texture> mTextures = {};
 
 		// Storage of sprites
-		std::vector<Sprite> mSprites = {};
-
+		std::deque<Sprite> mSprites = {};
 	};
 }

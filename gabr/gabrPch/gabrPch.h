@@ -18,6 +18,7 @@
 #include <iomanip>
 #include <ctime>
 #include <cstdint>
+#include <deque>
 
 // Containers
 #include <string>

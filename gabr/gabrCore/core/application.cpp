@@ -13,7 +13,11 @@ namespace Gabr
 		sInstance = this;
 
 		Logger::Get().Log(LogSeverity::TRACE, "Engine initialized!");
+		
+		// Initialize rendering manager
+		mRenderer = std::unique_ptr<RenderingManager>(new RenderingManager(640, 360));
 
+		//Sprite* testSpr = mRenderer->CreateSprite(0.0f, 0.0f, "", 1.0f, 1.0f, 0.0f);
 	}
 
 	// Destructor
@@ -34,6 +38,16 @@ namespace Gabr
 
 			// Engine timer tick
 			Timer::Tick();
+
+			// Rendering manager update
+			if (mRenderer->IsRunning())
+			{
+				mRenderer->Update();
+			}
+			else // If window was closed
+			{
+				bRunning = false;
+			}
 
 			//FPSLimiter::SetEnabled(!mRenderer->IsVsync());
 			FPSLimiter::EndFrame();

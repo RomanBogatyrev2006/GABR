@@ -6,6 +6,7 @@ namespace Gabr
 {
 	class GABR_API Texture
 	{
-
+	public:
+		virtual void Init() = 0;
 	};
 }

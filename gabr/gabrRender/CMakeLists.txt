@@ -44,7 +44,10 @@ target_link_libraries(GabrRendering PUBLIC GabrPch)
 target_link_libraries(GabrRendering PUBLIC GabrPlatform)
 
 # Bgfx library
-target_link_libraries(GabrRendering PRIVATE bgfx)
+target_link_libraries(GabrRendering PUBLIC bgfx)
+
+# SDL library
+target_link_libraries(GabrRendering PUBLIC SDL3::SDL3)
 
 
 # --Other--

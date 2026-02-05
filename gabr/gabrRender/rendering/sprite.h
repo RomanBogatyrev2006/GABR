@@ -1,12 +1,17 @@
 #pragma once
 
 #include <api.h>
+#include <bgfx/bgfx.h>
 
 namespace Gabr
 {
 	class GABR_API Sprite
 	{
 	public:
+		Sprite();
+
+		~Sprite();
+
 		void Render();
 
 		
@@ -66,10 +71,10 @@ namespace Gabr
 		// --Rendering--
 
 		// Set texture
-		virtual void SetTexture() const;
+		//virtual void SetTexture() const;
 
 		// Get teuxtre
-		virtual void GetTexture() const;
+		//virtual void GetTexture() const;
 
 
 		// Set visibility
@@ -121,5 +126,12 @@ namespace Gabr
 
 		// Opacity of sprite
 		float mOpacity = 1.0f;
+
+		
+		// --BGFX--
+
+		// Index buffer
+		uint16_t mIndices[6] = { 3,2,0,2,1,0 };
+		bgfx::IndexBufferHandle mIndexBuffer;
 	};
 }

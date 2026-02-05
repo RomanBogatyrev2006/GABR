@@ -1,6 +1,7 @@
 #pragma once
 #include <log/logger.h>
 #include <memory>
+#include <rendering/renderingManager.h>
 
 namespace Gabr
 {
@@ -20,6 +21,8 @@ namespace Gabr
 		// Is application running?
 		bool bRunning = false;
 
+		// Renderer
+		std::unique_ptr<RenderingManager> mRenderer;
 
 		// Instance
 		static Application* sInstance;
