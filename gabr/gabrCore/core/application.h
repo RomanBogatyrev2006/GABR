@@ -22,10 +22,14 @@ namespace Gabr
 		bool bRunning = false;
 
 		// Renderer
-		std::unique_ptr<RenderingManager> mRenderer;
+		//std::unique_ptr<RenderingManager> mRenderer;
+		RenderingManager mRenderer;
 
 		// Instance
 		static Application* sInstance;
+
+		Texture* tex;
+		float rotation = 0.0f;
 	};
 
 	Application* Create();

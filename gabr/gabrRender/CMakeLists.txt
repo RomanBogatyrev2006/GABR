@@ -11,6 +11,7 @@ set(GABR_RENDER_SOURCES
 	rendering/renderingManager.cpp
 	rendering/sprite.cpp
 	rendering/texture.cpp
+	rendering/shader.cpp
 )
 
 # Headers
@@ -18,6 +19,8 @@ set(GABR_RENDER_HEADERS
 	rendering/renderingManager.h
 	rendering/sprite.h
 	rendering/texture.h
+	rendering/shader.h
+	rendering/stb_image.h
 )
 
 
@@ -48,6 +51,9 @@ target_link_libraries(GabrRendering PUBLIC bgfx)
 
 # SDL library
 target_link_libraries(GabrRendering PUBLIC SDL3::SDL3)
+
+# GLM library
+target_link_libraries(GabrRendering PUBLIC glm)
 
 
 # --Other--

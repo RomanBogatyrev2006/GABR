@@ -1,7 +1,7 @@
 #include "sprite.h"
 
 #include <log/logger.h>
-
+/*
 namespace Gabr
 {
 	Sprite::Sprite()
@@ -13,16 +13,47 @@ namespace Gabr
 			Logger::Get().Log(LogSeverity::TRACE, "Couldn't create index buffer!");
 			return;
 		}
+
+		mVertexLayout.begin()
+			.add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
+			.add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true)
+			.add(bgfx::Attrib::TexCoord0, 2, bgfx::AttribType::Float)
+		.end();
+
+		                 					   //AABBGGRR
+		mVertices[0] = { {-0.5f, 0.5f, 0.0f}, {0xFFFFFFFF}, {0.0, 0.0} };
+		mVertices[1] = { {0.5, 0.5, 0.0},     {0xFFFFFFFF}, {1.0, 0.0} };
+		mVertices[2] = { {0.5, -0.5, 0.0},    {0xFFFFFFFF}, {1.0, 1.0} };
+		mVertices[3] = { {-0.5, -0.5, 0.0},   {0xFFFFFFFF}, {0.0, 1.0} };
+
+		//mVertexBuffer = bgfx::createVertexBuffer(bgfx::makeRef(mVertices, sizeof(Vertex) * 4), mVertexLayout);
+
+		if (!bgfx::isValid(mVertexBuffer))
+		{
+			Logger::Get().Log(LogSeverity::TRACE, "Couldn't create index buffer!");
+			return;
+		}
+
+		shaderProgram = new Shader("vertex.bin", "frag.bin");
+		mTexture = new Texture("gamedata/AboutToPOP.png");
+		mUniform = bgfx::createUniform("textureColor", bgfx::UniformType::Sampler);
 	}
 
 	Sprite::~Sprite()
 	{
+		delete shaderProgram;
+		delete mTexture;
+		bgfx::destroy(mUniform);
 		bgfx::destroy(mIndexBuffer);
+		bgfx::destroy(mVertexBuffer);
 	}
 
 	void Sprite::Render()
 	{
-		
+		bgfx::setTexture(0, mUniform, mTexture->GetHandle());
+		bgfx::setVertexBuffer(0, mVertexBuffer);
+		bgfx::setIndexBuffer(mIndexBuffer);
+		bgfx::submit(0, shaderProgram->GetHandle());
 	}
 
 
@@ -142,4 +173,4 @@ namespace Gabr
 	{
 		return mOpacity;
 	}
-}
+}*/

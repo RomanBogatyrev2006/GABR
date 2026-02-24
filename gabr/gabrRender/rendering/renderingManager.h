@@ -1,23 +1,46 @@
 #pragma once
 
-//#include <bgfx/bgfx.h>
-//#include <bgfx/platform.h>
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
-#include "sprite.h"
+#include <bgfx/bgfx.h>
+#include <glm/glm.hpp>
+#include "shader.h"
 #include "texture.h"
-#include <deque>
 
 namespace Gabr
 {
+	struct Vertex
+	{
+		glm::vec3 Position;
+		uint32_t Color;
+		glm::vec2 TextureCoords;
+	};
+
+	struct RenderBatch
+	{
+		glm::mat4 Position;
+		bgfx::TextureHandle Texture;
+		uint32_t StartIndex;
+		uint32_t NumberOfIndices;
+	};
+
 	class GABR_API RenderingManager
 	{
 	public:
 		// Constructor
-		RenderingManager(unsigned int width, unsigned int height);
+		RenderingManager();
 
 		// Destructor (Deinitialize/Close/Destroy/Quit)
 		~RenderingManager();
+
+		// Create window and initialize renderer
+		bool Initialize(unsigned int width, unsigned int height);
+
+		// Deinitialize renderer and rendering manager
+		void Deinitialize();
+
+		// Begin
+		void Begin();
 
 		// Update renderer and rendering manager
 		void Update();
@@ -26,36 +49,23 @@ namespace Gabr
 		// Is renderer running?
 		inline const bool IsRunning() { return bRunning; };
 
-		/*
-		// --Textures managing--
 
-		// Load texture from file (path to file)
-		bool LoadTexture(const std::string& file, const std::string& tag);
+		// --Drawing--
 
-		// Unload texture
-		void UnloadTexture(const std::string& tag);
+		// Draw rectangle
+		void DrawRect(glm::vec2 position, float rotation, uint32_t color, glm::vec2 scale);
 
-		// Get texture by tag
-		void GetTexture(const std::string& tag);
-
-		*/
-		// --Sprites managing--
+		// Draw texture
+		void DrawTexture(Texture* texture, glm::vec2 position, float rotation, uint32_t color, glm::vec2 scale);
 
 		// Create sprite object
-		Sprite* CreateSprite(float x = 0.0f, float y = 0.0f, const std::string& textureTag = "", float scaleX = 1.0f, float scaleY = 1.0f, float angle = 0.0f);
+		//Sprite* CreateSprite(float x = 0.0f, float y = 0.0f, const std::string& textureTag = "", float scaleX = 1.0f, float scaleY = 1.0f, float angle = 0.0f);
 
 		// Destroy sprite object
-		void DestroySprite(Sprite* sprite);
+		//void DestroySprite(Sprite* sprite);
 
 	private:
-		// Create window and initialize renderer
-		bool Initialize();
 		
-		// Deinitialize renderer and rendering manager
-		void Deinitialize();
-
-		// Clear/Destroy all sprites
-		void ClearSprites();
 		
 
 
@@ -79,10 +89,21 @@ namespace Gabr
 		bool bInitialized = false;
 
 
-		// Storage of texture
-		//std::vector<std::string, Texture> mTextures = {};
+		bgfx::IndexBufferHandle mIndexBuffer;
+		bgfx::VertexLayout mVertexLayout;
+		bgfx::DynamicVertexBufferHandle mVertexBuffer;
+		bgfx::UniformHandle mUniform;
+		Texture* mWhiteTexture;
+		Shader* mShaderProgram;
 
-		// Storage of sprites
-		std::deque<Sprite> mSprites = {};
+		std::vector<Vertex> mVertices;
+
+		std::vector<RenderBatch> mRenderBatches;
+
+		// Projection (Camera)
+		glm::vec3 mAt;
+		glm::vec3 mCamera;
+		glm::mat4 mView;
+		glm::mat4 mProjection;
 	};
 }

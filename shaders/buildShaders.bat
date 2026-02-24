@@ -1,0 +1,2 @@
+..\external\bgfxcmake\cmake-build\cmake\bgfx\Debug\shaderc.exe -f frag.sc -o frag.bin --type f --platform windows -p s_5_0 -i ..\external\bgfxcmake\bgfx\src
+..\external\bgfxcmake\cmake-build\cmake\bgfx\Debug\shaderc.exe -f vertex.sc -o vertex.bin --type v --platform windows -p s_5_0 -i ..\external\bgfxcmake\bgfx\src

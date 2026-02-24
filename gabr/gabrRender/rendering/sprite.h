@@ -2,9 +2,19 @@
 
 #include <api.h>
 #include <bgfx/bgfx.h>
-
+#include <glm/glm.hpp>
+#include "shader.h"
+#include "texture.h"
+/*
 namespace Gabr
 {
+	//struct Vertex
+	//{
+	//	glm::vec3 Position;
+	//	uint32_t Color;
+	//	glm::vec2 TextureCoords;
+	//};
+
 	class GABR_API Sprite
 	{
 	public:
@@ -133,5 +143,20 @@ namespace Gabr
 		// Index buffer
 		uint16_t mIndices[6] = { 3,2,0,2,1,0 };
 		bgfx::IndexBufferHandle mIndexBuffer;
+
+		// Vertex buffer
+		bgfx::VertexBufferHandle mVertexBuffer;
+
+		bgfx::VertexLayout mVertexLayout;
+
+		Vertex mVertices[4];
+
+		// Shader
+		Shader* shaderProgram;
+
+		// Texture
+		Texture* mTexture;
+
+		bgfx::UniformHandle mUniform;
 	};
-}
+}*/
