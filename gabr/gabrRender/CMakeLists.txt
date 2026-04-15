@@ -8,18 +8,21 @@ project(GabrRendering LANGUAGES CXX)
 
 # Sources
 set(GABR_RENDER_SOURCES
-	rendering/renderingManager.cpp
-	rendering/sprite.cpp
-	rendering/texture.cpp
-	rendering/shader.cpp
+	rendering/renderer.cpp
+	rendering/camera.cpp
+	rendering/animation.cpp
+	
+	window/window.cpp
 )
 
 # Headers
 set(GABR_RENDER_HEADERS 
-	rendering/renderingManager.h
-	rendering/sprite.h
-	rendering/texture.h
-	rendering/shader.h
+	rendering/renderer.h
+	rendering/camera.h
+	rendering/animation.h
+	
+	window/window.h	
+	
 	rendering/stb_image.h
 )
 
@@ -45,9 +48,6 @@ target_link_libraries(GabrRendering PUBLIC GabrPch)
 
 # Framework platform module
 target_link_libraries(GabrRendering PUBLIC GabrPlatform)
-
-# Bgfx library
-target_link_libraries(GabrRendering PUBLIC bgfx)
 
 # SDL library
 target_link_libraries(GabrRendering PUBLIC SDL3::SDL3)

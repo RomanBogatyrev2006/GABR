@@ -1,7 +1,10 @@
 #pragma once
 #include <log/logger.h>
 #include <memory>
-#include <rendering/renderingManager.h>
+#include <window/window.h>
+#include <rendering/renderer.h>
+#include <input/input.h>
+#include "core.h"
 
 namespace Gabr
 {
@@ -9,27 +12,52 @@ namespace Gabr
 	{
 	public:
 		// Constructor
-		Application();
+		Application(int width = GABR_DEFAULT_WIDTH, int height = GABR_DEFAULT_HEIGHT);
 
 		// Destructor
 		virtual ~Application();
 
 
+		// --Client--
+
+		// Client update
+		virtual void ClientUpdate(double deltaTime) {}
+
+		// Client rendering
+		virtual void ClientRender() {}
+
+		// Client input handling
+		virtual void ClientInput() {}
+
+
+		// --Getters--
+
+		// Get application's renderer
+		Renderer* GetRenderer() { return &mRenderer; }
+
+		// 
+
+
+
 		// Run application
 		void Run();
 	private:
+		void ProcessEvents();
+		void Render();
+
 		// Is application running?
 		bool bRunning = false;
 
+		// Window
+		Window mWindow;
+
 		// Renderer
-		//std::unique_ptr<RenderingManager> mRenderer;
-		RenderingManager mRenderer;
+		Renderer mRenderer;
 
 		// Instance
 		static Application* sInstance;
 
-		Texture* tex;
-		float rotation = 0.0f;
+		int loadingBlink = 0;
 	};
 
 	Application* Create();
