@@ -41,6 +41,9 @@ target_link_libraries(GabrEntity PUBLIC GabrPch)
 # Framework platform module
 target_link_libraries(GabrEntity PUBLIC GabrPlatform)
 
+# Link rendering module to entity module
+target_link_libraries(GabrEntity PUBLIC GabrRendering)
+
 
 # --Other--
 

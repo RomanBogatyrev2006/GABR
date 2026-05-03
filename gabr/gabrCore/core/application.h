@@ -4,6 +4,7 @@
 #include <window/window.h>
 #include <rendering/renderer.h>
 #include <input/input.h>
+#include <entity/entityManager.h>
 #include "core.h"
 
 namespace Gabr
@@ -35,6 +36,9 @@ namespace Gabr
 		// Get application's renderer
 		Renderer* GetRenderer() { return &mRenderer; }
 
+		// Get application's entity manager
+		EntityManager* GetEntityManager() { return &mEntManager; }
+
 		// 
 
 
@@ -53,6 +57,9 @@ namespace Gabr
 
 		// Renderer
 		Renderer mRenderer;
+
+		// Entity manager
+		EntityManager mEntManager;
 
 		// Instance
 		static Application* sInstance;

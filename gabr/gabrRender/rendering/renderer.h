@@ -12,6 +12,16 @@ namespace Gabr
 	class Window;
 	class Texture;
 
+	struct RenderCommand
+	{
+		SDL_Texture* texture;
+		SDL_FRect dst;
+		float rotation;
+		SDL_FPoint center;
+		SDL_FlipMode flip;
+		float z;
+	};
+
 	class GABR_API Renderer
 	{
 	public:
@@ -55,7 +65,8 @@ namespace Gabr
 			bool hFlip = false,
 			bool vFlip = false,
 			glm::vec2 origin = glm::vec2{ 0, 0 },
-			bool fixedToCamera = false
+			bool fixedToCamera = false,
+			float z = 0.0f
 		);
 
 
@@ -91,6 +102,7 @@ namespace Gabr
 		};
 
 		std::unordered_map<std::string, TextureData> mTextures;
+		std::vector<RenderCommand> mRenderQueue;
 
 		Camera mCamera;
 	};

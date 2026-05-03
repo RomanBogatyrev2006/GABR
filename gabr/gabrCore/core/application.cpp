@@ -15,6 +15,7 @@ namespace Gabr
 		sInstance = this;
 		mRenderer.LoadTexture("CORELOADING", "coredata/loading.png");
 		Logger::Get().Log(LogSeverity::TRACE, "Engine initialized!");
+		Timer::Init();
 
 		
 	}
@@ -22,9 +23,8 @@ namespace Gabr
 	// Destructor
 	Application::~Application()
 	{
-		//Timer::Shutdown();
+		Timer::Shutdown();
 		Logger::Get().Log(LogSeverity::TRACE, "Engine terminated!");
-		//delete tex;
 	}
 
 	// Run application
@@ -35,7 +35,7 @@ namespace Gabr
 
 		while (bRunning)
 		{
-			//FPSLimiter::BeginFrame();
+			FPSLimiter::BeginFrame();
 
 			Input::BeginFrame();
 
@@ -56,7 +56,7 @@ namespace Gabr
 			Render();
 
 			//FPSLimiter::SetEnabled(!mRenderer->IsVsync());
-			//FPSLimiter::EndFrame();
+			FPSLimiter::EndFrame();
 		}
 	}
 

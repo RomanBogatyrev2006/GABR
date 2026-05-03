@@ -42,6 +42,27 @@ namespace Gabr
 	// Present (Render)
 	void Renderer::Present()
 	{
+		std::sort(mRenderQueue.begin(), mRenderQueue.end(),
+			[](const RenderCommand& a, const RenderCommand& b)
+			{
+				return a.z < b.z;
+			});
+
+		for (const auto& cmd : mRenderQueue)
+		{
+			SDL_RenderTextureRotated(
+				mRenderer,
+				cmd.texture,
+				nullptr,
+				&cmd.dst,
+				cmd.rotation,
+				&cmd.center,
+				cmd.flip
+			);
+		}
+
+		mRenderQueue.clear();
+
 		SDL_RenderPresent(mRenderer);
 	}
 
@@ -107,7 +128,7 @@ namespace Gabr
 	}
 
 	// Draw texture
-	void Renderer::DrawTexture(const std::string& tag, glm::vec2 position, glm::vec2 scale, float rotation, bool hFlip, bool vFlip, glm::vec2 origin, bool fixedToCamera)
+	void Renderer::DrawTexture(const std::string& tag, glm::vec2 position, glm::vec2 scale, float rotation, bool hFlip, bool vFlip, glm::vec2 origin, bool fixedToCamera, float z)
 	{
 		auto it = mTextures.find(tag);
 		if (it == mTextures.end()) return;
@@ -154,15 +175,25 @@ namespace Gabr
 		else if (hFlip && !vFlip)	{ flip = SDL_FLIP_HORIZONTAL; }
 		else if (hFlip && vFlip)	{ flip = SDL_FLIP_HORIZONTAL_AND_VERTICAL; }
 
-		SDL_RenderTextureRotated(
-			mRenderer,
-			tex,
-			nullptr,
-			&dst,
-			fixedToCamera ? rotation - mCamera.rotation : rotation,
-			&center,
-			flip
-		);
+		RenderCommand cmd;
+		cmd.texture = tex;
+		cmd.dst = dst;
+		cmd.rotation = fixedToCamera ? rotation - mCamera.rotation : rotation;
+		cmd.center = center;
+		cmd.flip = flip;
+		cmd.z = z;
+
+		mRenderQueue.push_back(cmd);
+
+		//SDL_RenderTextureRotated(
+		//	mRenderer,
+		//	tex,
+		//	nullptr,
+		//	&dst,
+		//	fixedToCamera ? rotation - mCamera.rotation : rotation,
+		//	&center,
+		//	flip
+		//);
 	}
 
 	// Get SDL Renderer
