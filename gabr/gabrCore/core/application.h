@@ -5,6 +5,8 @@
 #include <rendering/renderer.h>
 #include <input/input.h>
 #include <entity/entityManager.h>
+#include <scenes/sceneManager.h>
+#include <audio/audioManager.h>
 #include "core.h"
 
 namespace Gabr
@@ -39,12 +41,16 @@ namespace Gabr
 		// Get application's entity manager
 		EntityManager* GetEntityManager() { return &mEntManager; }
 
-		// 
+		// Get application's scene manager
+		SceneManager* GetSceneManager() { return &mSceneManager; }
 
+		// Get application's audio manager
+		AudioManager* GetAudioManager() { return &mAudioManager; }
 
 
 		// Run application
 		void Run();
+
 	private:
 		void ProcessEvents();
 		void Render();
@@ -60,6 +66,12 @@ namespace Gabr
 
 		// Entity manager
 		EntityManager mEntManager;
+
+		// Scene manager
+		SceneManager mSceneManager;
+
+		// Audio manager
+		AudioManager mAudioManager;
 
 		// Instance
 		static Application* sInstance;

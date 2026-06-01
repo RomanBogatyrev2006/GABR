@@ -10,6 +10,7 @@ project(GabrCore LANGUAGES CXX)
 set(GABR_CORE_CORE_SOURCES
 	core/core.cpp
 	core/application.cpp
+	core/entrypoint.cpp
 )
 
 # Headers

@@ -10,14 +10,14 @@ namespace Gabr
 	// Constructor
 	Application::Application(int width, int height)
 		: mWindow(width, height, GABR_DEFAULT_APPNAME),
-		  mRenderer(mWindow)
+		  mRenderer(mWindow),
+		  mSceneManager(&mEntManager),
+		  mAudioManager()
 	{
 		sInstance = this;
+		Timer::Init();
 		mRenderer.LoadTexture("CORELOADING", "coredata/loading.png");
 		Logger::Get().Log(LogSeverity::TRACE, "Engine initialized!");
-		Timer::Init();
-
-		
 	}
 
 	// Destructor
@@ -47,6 +47,8 @@ namespace Gabr
 			loadingBlink++;
 			if (loadingBlink > 4) { loadingBlink = 0; }
 
+			mSceneManager.Update((float)Timer::DeltaTime());
+
 			ClientUpdate(Timer::DeltaTime());
 
 			ProcessEvents();
@@ -54,6 +56,8 @@ namespace Gabr
 			ClientInput();
 
 			Render();
+
+			mAudioManager.Update();
 
 			//FPSLimiter::SetEnabled(!mRenderer->IsVsync());
 			FPSLimiter::EndFrame();
@@ -73,6 +77,8 @@ namespace Gabr
 	void Application::Render()
 	{
 		mRenderer.Clear(0.1f, 0.1f, 0.1f);
+
+		mSceneManager.Render(&mRenderer);
 
 		ClientRender();
 

@@ -8,6 +8,7 @@ namespace Gabr
 	// Constructor
 	Logger::Logger()
 	{
+		#ifndef NDEBUG
 		#ifdef GABR_TARGET_WIN
 			SetConsoleOutputCP(CP_UTF8);
 			SetConsoleCP(CP_UTF8);
@@ -17,6 +18,7 @@ namespace Gabr
 			GetConsoleMode(hOut, &dwMode);
 			dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 			SetConsoleMode(hOut, dwMode);
+		#endif
 		#endif
 	}
 
@@ -72,6 +74,7 @@ namespace Gabr
 	// Log message to console
 	void Logger::Log(LogSeverity severity, const std::string& message)
 	{
+#ifndef NDEBUG
 		// Getting current time
 		time_t raw_time;
 		time(&raw_time);
@@ -93,6 +96,7 @@ namespace Gabr
 			message << "\033[0m" << std::endl;
 		
 		Print(builder.str());
+#endif
 	}
 
 	// Create and initialize logger

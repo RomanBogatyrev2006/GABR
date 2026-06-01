@@ -2,7 +2,7 @@
 #include <iostream>
 
 // Auto-define
-#ifdef _DEBUG
+#ifndef NDEBUG
 	#define	GABR_ASSERT_ENABLE
 #endif
 

@@ -27,8 +27,14 @@ add_subdirectory(gabr/gabrRender)
 # Entity module
 add_subdirectory(gabr/gabrEntity)
 
+# Scenes module
+add_subdirectory(gabr/gabrScenes)
+
 # Input module
 add_subdirectory(gabr/gabrInput)
+
+# Audio module
+add_subdirectory(gabr/gabrAudio)
 
 
 # --External modules--
@@ -37,7 +43,7 @@ add_subdirectory(gabr/gabrInput)
 set(SDL_SHARED OFF CACHE BOOL "" FORCE)
 set(SDL_STATIC ON CACHE BOOL "" FORCE)
 set(SDL_TEST OFF CACHE BOOL "" FORCE)
-set(SDL_AUDIO ON CACHE BOOL "" FORCE)
+set(SDL_AUDIO OFF CACHE BOOL "" FORCE)
 set(SDL_JOYSTICK OFF CACHE BOOL "" FORCE)
 set(SDL_HAPTIC OFF CACHE BOOL "" FORCE)
 set(SDL_SENSOR OFF CACHE BOOL "" FORCE)
@@ -52,6 +58,9 @@ add_subdirectory(external/sdl)
 # GLM
 add_subdirectory(external/glm)
 
+# SoLoud
+add_subdirectory(external/soloud)
+
 
 # --Framework interface library that needs to link with game
 add_library(GabrFramework INTERFACE)
@@ -64,6 +73,9 @@ target_link_libraries(GabrFramework INTERFACE
 	GabrLog
 	GabrRendering
 	GabrEntity
+	GabrScenes
+	GabrInput
+	GabrAudio
 )
 
 # (ONLY FOR VISUAL STUDIO) Set default startup project to GABR instead cmake's ALL_BUILD

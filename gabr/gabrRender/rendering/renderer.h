@@ -1,6 +1,6 @@
 #pragma once
 
-#define SDL_MAIN_HANDLED
+//#define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <api.h>

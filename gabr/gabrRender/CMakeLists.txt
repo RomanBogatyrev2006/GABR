@@ -23,6 +23,7 @@ set(GABR_RENDER_HEADERS
 	
 	window/window.h	
 	
+	# Stb image
 	rendering/stb_image.h
 )
 
