@@ -76,7 +76,7 @@ namespace Gabr
 		// Instance
 		static Application* sInstance;
 
-		int loadingBlink = 0;
+		//int loadingBlink = 0;
 	};
 
 	Application* Create();

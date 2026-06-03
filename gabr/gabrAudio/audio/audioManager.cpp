@@ -132,41 +132,84 @@ namespace Gabr
 		voice->tag = tag;
 		voice->stream = stream;
 
-		if (!tag.empty() && CanPlay(priority))
+		SoLoud::handle h = 0;
+
+		// -----------------------------
+		// TRY PLAY
+		// -----------------------------
+		if (!tag.empty())
 		{
 			if (stream)
 			{
 				auto it = streams.find(tag);
 				if (it != streams.end())
-					voice->handle = engine.play(*it->second);
+					h = engine.play(*it->second);
 			}
 			else
 			{
 				auto it = sounds.find(tag);
 				if (it != sounds.end())
-					voice->handle = engine.play(*it->second);
+					h = engine.play(*it->second);
 			}
+		}
 
-			if (engine.isValidVoiceHandle(voice->handle))
+		// -----------------------------
+		// NO SLOT? TRY STEAL
+		// -----------------------------
+		if (!engine.isValidVoiceHandle(h))
+		{
+			int victimId = FindLowestPriorityVoice();
+
+			if (victimId != -1)
 			{
-				engine.setVolume(voice->handle, volume);
-				engine.setPan(voice->handle, pan);
-				engine.setRelativePlaySpeed(voice->handle, pitch);
-				engine.setLooping(voice->handle, loop);
+				auto& victim = voices[victimId];
 
-				if (voice->loopPoint > 0.0)
-					engine.setLoopPoint(voice->handle, voice->loopPoint);
+				if (victim && victim->priority < priority)
+				{
+					if (engine.isValidVoiceHandle(victim->handle))
+						engine.stop(victim->handle);
+
+					victim.reset();
+					generations[victimId]++;
+					freeIds.push_back(victimId);
+
+					if (stream)
+					{
+						auto it = streams.find(tag);
+						if (it != streams.end())
+							h = engine.play(*it->second);
+					}
+					else
+					{
+						auto it = sounds.find(tag);
+						if (it != sounds.end())
+							h = engine.play(*it->second);
+					}
+				}
 			}
+		}
+
+		voice->handle = h;
+
+		// -----------------------------
+		// APPLY PARAMS
+		// -----------------------------
+		if (engine.isValidVoiceHandle(h))
+		{
+			engine.setVolume(h, volume);
+			engine.setPan(h, pan);
+			engine.setRelativePlaySpeed(h, pitch);
+			engine.setLooping(h, loop);
 		}
 
 		voices[id] = std::move(voice);
 
-		VoiceHandle h;
-		h.id = id;
-		h.generation = generations[id];
-		h.manager = this;
+		VoiceHandle out;
+		out.id = id;
+		out.generation = generations[id];
+		out.manager = this;
 
-		return h;
+		return out;
 	}
 
 	void AudioManager::DestroyVoice(VoiceHandle handle)
@@ -303,4 +346,25 @@ namespace Gabr
 	bool Voice::IsSelfDestroy() const { return selfDestroy; }
 
 	bool Voice::IsStream() const { return stream; }
+
+	int AudioManager::FindLowestPriorityVoice()
+	{
+		int lowestIndex = -1;
+		int lowestPriority = INT_MAX;
+
+		for (int i = 0; i < (int)voices.size(); i++)
+		{
+			auto& v = voices[i];
+			if (!v) continue;
+			if (!engine.isValidVoiceHandle(v->handle)) continue;
+
+			if (v->priority < lowestPriority)
+			{
+				lowestPriority = v->priority;
+				lowestIndex = i;
+			}
+		}
+
+		return lowestIndex;
+	}
 }

@@ -8,6 +8,13 @@ namespace Gabr
 {
 	class AudioManager;
 
+	struct ActiveVoiceInfo
+	{
+		int priority = 0;
+		SoLoud::handle handle = 0;
+		uint32_t id = 0;
+	};
+
 	struct VoiceHandle
 	{
 		uint32_t id = 0;
@@ -109,6 +116,8 @@ namespace Gabr
 
 		bool CanPlay(int priority);
 
+		int FindLowestPriorityVoice();
+
 		SoLoud::Soloud engine;
 
 		std::unordered_map<std::string, std::unique_ptr<SoLoud::Wav>> sounds;
@@ -116,6 +125,7 @@ namespace Gabr
 
 		// voices storage
 		std::vector<std::unique_ptr<Voice>> voices;
+		std::vector<ActiveVoiceInfo> activeVoices;
 		std::vector<uint32_t> generations;
 		std::vector<uint32_t> freeIds;
 

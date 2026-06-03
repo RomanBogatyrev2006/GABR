@@ -16,7 +16,7 @@ namespace Gabr
 	{
 		sInstance = this;
 		Timer::Init();
-		mRenderer.LoadTexture("CORELOADING", "coredata/loading.png");
+		//mRenderer.LoadTexture("CORELOADING", "coredata/loading.png");
 		Logger::Get().Log(LogSeverity::TRACE, "Engine initialized!");
 	}
 
@@ -30,7 +30,6 @@ namespace Gabr
 	// Run application
 	void Application::Run()
 	{
-		//Timer::Init();
 		bRunning = true;
 
 		while (bRunning)
@@ -44,8 +43,8 @@ namespace Gabr
 
 			//Logger::Get().Log(LogSeverity::TRACE, std::to_string(x)+ std::to_string(y));
 
-			loadingBlink++;
-			if (loadingBlink > 4) { loadingBlink = 0; }
+			//loadingBlink++;
+			//if (loadingBlink > 4) { loadingBlink = 0; }
 
 			mSceneManager.Update((float)Timer::DeltaTime());
 
@@ -59,7 +58,8 @@ namespace Gabr
 
 			mAudioManager.Update();
 
-			//FPSLimiter::SetEnabled(!mRenderer->IsVsync());
+			//FPSLimiter::SetEnabled(false);
+			//FPSLimiter::SetLimit(30);
 			FPSLimiter::EndFrame();
 		}
 	}
@@ -82,10 +82,10 @@ namespace Gabr
 
 		ClientRender();
 
-		if (loadingBlink < 4)
-		{
-			mRenderer.DrawTexture("CORELOADING", {0, 480 - 32}, {1,1}, 0.0f, false, false, {0,0}, true);
-		}
+		//if (loadingBlink < 4)
+		//{
+		//	mRenderer.DrawTexture("CORELOADING", {0, 480 - 32}, {1,1}, 0.0f, false, false, {0,0}, true);
+		//}
 
 		mRenderer.Present();
 	}
